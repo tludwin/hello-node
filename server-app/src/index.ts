@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000
 var counter = 0
 
 var fileInfoHandlerInstance = new fileInfoHandler.FileInfoHandler
+var fileHandlerInstance = new fileHandler.FileHandler
 
 var app = express()
 app.set('port', port)
@@ -28,6 +29,7 @@ app.get('/json', (req, res) => {
 })
 
 app.get('/v1/fileInfoHandler/:filename', fileInfoHandlerInstance.getFileName)
+app.get('/v1/fileHandler/add/:x/:y', fileHandlerInstance.add)
 
 app.get('/user/:userid', (req, res) => {
     res.end("You asked for user id: " + req.params.userid)
@@ -80,4 +82,5 @@ http.createServer(app)
         console.log('Listening on ' + app.get('port'))
         console.log('Examples:')
         console.log('curl -X GET http://localhost:3000/v1/fileInfoHandler/')
+        console.log('curl -X GET http://localhost:3000/v1/fileHandler/add/')
     })
