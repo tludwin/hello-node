@@ -1,8 +1,13 @@
 import express = require('express')
 import http = require('http')
+import fileHandler = require('./file-handler')
+import fileInfoHandler = require('./file-info-handler')
 
 const port = process.env.PORT || 3000
 var counter = 0
+
+var fileInfoHandlerInstance = new fileInfoHandler.FileInfoHandler
+
 var app = express()
 app.set('port', port)
 app.get('/', (req, res) => {
@@ -22,10 +27,14 @@ app.get('/json', (req, res) => {
     res.end(JSON.stringify({ error: null, data: { "request_no": localCounter } }))
 })
 
+app.get('/v1/fileInfoHandler/:filename', fileInfoHandlerInstance.getFileName)
+
 app.get('/user/:userid', (req, res) => {
     res.end("You asked for user id: " + req.params.userid)
 })
-
+app.get('', (req,res) => {
+    
+})
 app.post('/stream', (req, res) => {
     var localCounter = ++counter
     console.log('New nr ' + localCounter + ' request is coming:\n')
@@ -69,4 +78,6 @@ app.post('/stream', (req, res) => {
 http.createServer(app)
     .listen(app.get('port'), () => {
         console.log('Listening on ' + app.get('port'))
+        console.log('Examples:')
+        console.log('curl -X GET http://localhost:3000/v1/fileInfoHandler/')
     })
