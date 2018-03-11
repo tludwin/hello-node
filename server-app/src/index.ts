@@ -9,7 +9,12 @@ var counter = 0
 var fileInfoHandlerInstance = new fileInfoHandler.FileInfoHandler
 var fileHandlerInstance = new fileHandler.FileHandler
 
-var app = express()
+// Apps vs services?
+// var app = express()
+// app.use('/app1', require('./app1/index').app)
+//    .use('/app2', require('./app2/index').app)
+//    .listen(port);
+
 app.set('port', port)
 app.get('/', (req, res) => {
     res.send('Dobriden')
